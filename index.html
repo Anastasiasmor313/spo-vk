@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Внутренний покой</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color1: #E3CFD0; /* Бледно-розовый */
+            --color2: #D1A9AA; /* Светло-розовый */
+            --color3: #7CA9BE; /* Голубой */
+            --color4: #4A798B; /* Серо-синий */
+            --color5: #245563; /* Темно-синий */
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--color1);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Контейнер сайта */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Шапка с логотипом */
+        .header {
+            background-color: var(--color5);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: var(--color3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--color5);
+        }
+        
+        .site-title {
+            color: var(--text-light);
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+        }
+        
+        /* Навигация */
+        .nav {
+            background-color: var(--color4);
+            padding: 15px 0;
+        }
+        
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            margin: 0 10px;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 500;
+            display: block;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--color5);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Основной контент */
+        .main-content {
+            padding: 40px 0;
+            min-height: calc(100vh - 260px);
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-title {
+            color: var(--color5);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 300;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background-color: var(--color3);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        /* Стили для страницы 1 - тест */
+        .test-container {
+            background-color: var(--text-light);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .test-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--color1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color5);
+            font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .progress-step.active {
+            background-color: var(--color3);
+            color: var(--text-light);
+        }
+        
+        .progress-step.completed {
+            background-color: var(--color5);
+            color: var(--text-light);
+        }
+        
+        .test-question {
+            margin-bottom: 30px;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            color: var(--color5);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .answers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .answer-btn {
+            padding: 15px;
+            background-color: var(--color1);
+            border: none;
+            border-radius: 10px;
+            color: var(--color5);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .answer-btn:hover {
+            background-color: var(--color2);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--color4);
+            color: var(--text-light);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--color5);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background-color: var(--color1);
+            color: var(--color5);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--color2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 30px;
+        }
+         
+        
+.motivation-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    /* Убрано ограничение max-height и заменено width: 100% вместо max-width: 100% */
+}
+        
+        .result-title {
+            color: var(--color5);
+            margin-bottom: 20px;
+        }
+        
+        /* Стили для страницы 2 - игры */
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .game-card {
+            background-color: var(--text-light);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .game-icon {
+            height: 180px;
+            background-color: var(--color3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color5);
+            font-size: 3rem;
+        }
+        
+        .game-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-title {
+            color: var(--color5);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .game-desc {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .game-link {
+            display: block;
+            padding: 12px;
+            background-color: var(--color4);
+            color: var(--text-light);
+            text-align: center;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .game-link:hover {
+            background-color: var(--color5);
+        }
+        
+        .info-block {
+            background-color: var(--text-light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-title {
+            color: var(--color5);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        /* Стили для страницы 3 - статья */
+        .article-container {
+            background-color: var(--text-light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article-section {
+            margin-bottom: 30px;
+        }
+        
+        .article-title {
+            color: var(--color5);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .recommendation-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .recommendation-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--color1);
+            border-radius: 10px;
+            border-left: 5px solid var(--color3);
+        }
+        
+        .recommendation-item strong {
+            color: var(--color5);
+        }
+        
+        .help-block {
+            background-color: var(--color1);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 5px solid var(--color5);
+        }
+        
+        /* Футер */
+        .footer {
+            background-color: var(--color5);
+            color: var(--text-light);
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer-text {
+            opacity: 0.8;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 1.5rem;
+            }
+            
+            .logo {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .test-container, .article-container, .info-block {
+                padding: 20px;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .games-container {
+                grid-template-columns: 1fr;
+            }
+            .motivation-image {
+        width: calc(100% + 40px); /* Расширяем за пределы контейнера */
+        margin-left: -20px;
+        margin-right: -20px;
+        border-radius: 0; /* Убираем скругление на мобильных */
+        max-width: none;
+    }
+        }
+        
+        @media (max-width: 480px) {
+            .site-title {
+                font-size: 1.3rem;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+                margin-right: 10px;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-item {
+                margin: 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-link {
+                padding: 10px;
+            }
+            
+            .test-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="logo.png" style="width: 50px; height: 50px;" alt="">
+                </div>
+                <h1 class="site-title">Внутренний покой</h1>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Навигация -->
+    <nav class="nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#test" class="nav-link active" data-page="test">Мотивационная картинка</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#games" class="nav-link" data-page="games">Игры для разгрузки</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#article" class="nav-link" data-page="article">Профилактика выгорания</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Основной контент -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Страница 1: Тест на мотивационную картинку -->
+            <section id="test" class="page active">
+                <h2 class="page-title">Найди свою мотивацию</h2>
+                <div class="test-container">
+                    <div id="testContent">
+                        <!-- Тест будет загружен через JavaScript -->
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Страница 2: Игры для разгрузки -->
+            <section id="games" class="page">
+                <h2 class="page-title">Игры для эмоциональной разгрузки</h2>
+                <div class="games-container">
+                    <!-- Игра 1 -->
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                        <div class="game-content">
+                            <h3 class="game-title">Рыбалка</h3>
+                            <p class="game-desc">Симулятор рыбалки для расслабления и медитации. Позволяет отвлечься от повседневных забот и погрузиться в мир природы.</p>
+                            <a href="https://vk.com/fishingonlinesimulator" target="_blank" class="game-link">Играть</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Игра 2 -->
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="game-content">
+                            <h3 class="game-title">Музыкальная головоломка</h3>
+                            <p class="game-desc">Расслабляющая игра, сочетающая музыку и головоломки. Помогает развивать креативность и снимать напряжение.</p>
+                            <a href="https://vk.com/app53603592" target="_blank" class="game-link">Играть</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Игра 3 -->
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="game-content">
+                            <h3 class="game-title">Садоводство</h3>
+                            <p class="game-desc">Создайте свой виртуальный сад и ухаживайте за растениями. Идеально для снятия стресса и восстановления внутреннего баланса.</p>
+                            <a href="https://vk.com/app52914976" target="_blank" class="game-link">Играть</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Игра 4 -->
+                    <div class="game-card">
+                        <div class="game-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="game-content">
+                            <h3 class="game-title">Реагенты</h3>
+                            <p class="game-desc">Научная головоломка, которая развивает логическое мышление и позволяет отвлечься от рутинных задач.</p>
+                            <a href="https://vk.com/reagenti25" target="_blank" class="game-link">Играть</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-block">
+                    <h3 class="info-title">Почему игры помогают?</h3>
+                    <p>Игры для эмоциональной разгрузки выполняют несколько важных функций:</p>
+                    <ul class="recommendation-list" style="margin-top: 15px;">
+                        <li class="recommendation-item"><strong>Отвлечение:</strong> Помогают переключить внимание с проблем на приятные задачи</li>
+                        <li class="recommendation-item"><strong>Расслабление:</strong> Спокойный геймплей снижает уровень стресса и тревоги</li>
+                        <li class="recommendation-item"><strong>Достижение:</strong> Чувство выполненной задачи повышает самооценку</li>
+                        <li class="recommendation-item"><strong>Позитивные эмоции:</strong> Игровой процесс стимулирует выработку эндорфинов</li>
+                        <li class="recommendation-item"><strong>Когнитивная разгрузка:</strong> Позволяют "перезагрузить" мозг, дав ему отдохнуть от серьезных задач</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Страница 3: Статья о выгорании -->
+            <section id="article" class="page">
+                <h2 class="page-title">Профилактика эмоционального выгорания</h2>
+                <div class="article-container">
+                    <div class="article-section">
+                        <h3 class="article-title">Как сохранить эмоциональное равновесие</h3>
+                        <p>Эмоциональное выгорание — это состояние физического, эмоционального и умственного истощения, вызванное длительным стрессом. Для его профилактики рекомендуется:</p>
+                        
+                        <ul class="recommendation-list">
+                            <li class="recommendation-item">
+                                <strong>1. Соблюдай режим сна.</strong> Достаточный сон помогает восстановить физические и психические силы, снижает усталость и повышает работоспособность.
+                            </li>
+                            <li class="recommendation-item">
+                                <strong>2. Планируй время для отдыха.</strong> Регулярно включай в своё расписание занятия, которые приносят тебе удовольствие и расслабление, чтобы поддерживать эмоциональный баланс.
+                            </li>
+                            <li class="recommendation-item">
+                                <strong>3. Занимайся физической активностью.</strong> Регулярные прогулки, спорт или упражнения улучшают общее состояние, повышают тонус и помогают переключиться от стрессовых мыслей.
+                            </li>
+                            <li class="recommendation-item">
+                                <strong>4. Практикуй осознанность.</strong> Учись концентрироваться на текущем моменте без осуждения, это помогает лучше управлять эмоциями и сохранять внутренние ресурсы.
+                            </li>
+                            <li class="recommendation-item">
+                                <strong>5. Относись к себе с поддержкой и добротой.</strong> Проявляй к себе заботу и понимание, как к близкому другу, вместо самокритики. Это снижает напряжение и улучшает психологическое состояние.
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="help-block">
+                        <h3>Когда обращаться за помощью</h3>
+                        <p>Если симптомы эмоционального выгорания (постоянная усталость, раздражительность, потеря мотивации) не проходят в течение нескольких недель, несмотря на применение профилактических мер, рекомендуется обратиться к профессиональному психологу или терапевту.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2025 Внутренний покой. СПО «Выше крыши»</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Данные для теста
+        const questions = [
+            {
+                question: "Какое у вас сейчас преобладающее настроение?",
+                answers: ["Энергичное и воодушевленное", "Спокойное и уравновешенное", "Уставшее и опустошенное"]
+            },
+            {
+                question: "Что вам больше всего нужно в данный момент?",
+                answers: ["Мотивация для новых свершений", "Поддержка и понимание", "Отдых и восстановление сил"]
+            },
+            {
+                question: "Как вы относитесь к текущим вызовам в жизни?",
+                answers: ["Вижу возможности для роста", "Принимаю как должное", "Чувствую себя перегруженным"]
+            }
+        ];
+
+        // Массив мотивационных картинок (25 примеров, в реальном проекте будут настоящие URL)
+        const motivationImages = [
+            { url: "img/img1.jpg", title: "" },
+            { url: "img/img2.jpg", title: "" },
+            { url: "img/img3.jpg", title: "" },
+            { url: "img/img4.jpg", title: "" },
+            { url: "img/img5.jpg", title: "" },
+            { url: "img/img6.jpg", title: "" },
+            { url: "img/img7.jpg", title: "" },
+            { url: "img/img8.jpg", title: "" },
+            { url: "img/img9.jpg", title: "" },
+            { url: "img/img10.jpg", title: "" },
+            { url: "img/img11.jpg", title: "" },
+            { url: "img/img12.jpg", title: "" },
+            { url: "img/img13.jpg", title: "" },
+            { url: "img/img14.jpg", title: "" },
+            { url: "img/img15.jpg", title: "" },
+            { url: "img/img16.jpg", title: "" },
+            { url: "img/img17.jpg", title: "" },
+            { url: "img/img18.jpg", title: "" },
+            { url: "img/img19.jpg", title: "" },
+            { url: "img/img20.jpg", title: "" },
+            { url: "img/img21.jpg", title: "" },
+            { url: "img/img22.jpg", title: "" },
+            { url: "img/img23.jpg", title: "" },
+            { url: "img/img24.jpg", title: "" },
+            { url: "img/img24.jpg", title: "" },
+        ];
+        
+        // Переменные для управления тестом
+        let currentQuestion = 0;
+        let userAnswers = [];
+        
+        // DOM элементы
+        const testContent = document.getElementById('testContent');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        
+        // Инициализация теста
+        function initTest() {
+            currentQuestion = 0;
+            userAnswers = [];
+            renderTest();
+        }
+        
+        // Рендер теста
+        function renderTest() {
+            // Если тест завершен, показываем результат
+            if (currentQuestion >= questions.length) {
+                showResult();
+                return;
+            }
+            
+            const question = questions[currentQuestion];
+            
+            // Прогресс теста
+            let progressHTML = '<div class="test-progress">';
+            for (let i = 0; i < questions.length; i++) {
+                let className = 'progress-step';
+                if (i < currentQuestion) className += ' completed';
+                else if (i === currentQuestion) className += ' active';
+                
+                progressHTML += `<div class="${className}">${i+1}</div>`;
+            }
+            progressHTML += '</div>';
+            
+            // Текущий вопрос
+            let questionHTML = `<div class="test-question">
+                <div class="question-text">${question.question}</div>
+                <div class="answers-container">`;
+            
+            // Варианты ответов
+            question.answers.forEach((answer, index) => {
+                questionHTML += `<button class="answer-btn" data-index="${index}">${answer}</button>`;
+            });
+            
+            questionHTML += '</div></div>';
+            
+            // Кнопки управления
+            let controlsHTML = '<div class="test-controls">';
+            
+            if (currentQuestion > 0) {
+                controlsHTML += `<button class="btn btn-secondary" id="prevBtn">Назад</button>`;
+            } else {
+                controlsHTML += `<div></div>`;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                controlsHTML += `<button class="btn btn-primary" id="nextBtn" disabled>Далее</button>`;
+            } else {
+                controlsHTML += `<button class="btn btn-primary" id="finishBtn" disabled>Завершить</button>`;
+            }
+            
+            controlsHTML += '</div>';
+            
+            // Объединяем все части
+            testContent.innerHTML = progressHTML + questionHTML + controlsHTML;
+            
+            // Назначаем обработчики событий
+            const answerButtons = document.querySelectorAll('.answer-btn');
+            answerButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Снимаем выделение со всех кнопок
+                    answerButtons.forEach(btn => btn.style.backgroundColor = '');
+                    
+                    // Выделяем выбранную кнопку
+                    this.style.backgroundColor = 'var(--color3)';
+                    this.style.color = 'var(--text-light)';
+                    
+                    // Сохраняем ответ
+                    userAnswers[currentQuestion] = parseInt(this.getAttribute('data-index'));
+                    
+                    // Активируем кнопку "Далее" или "Завершить"
+                    const nextBtn = document.getElementById('nextBtn');
+                    const finishBtn = document.getElementById('finishBtn');
+                    
+                    if (nextBtn) nextBtn.disabled = false;
+                    if (finishBtn) finishBtn.disabled = false;
+                });
+            });
+            
+            // Обработчики для кнопок управления
+            const prevBtn = document.getElementById('prevBtn');
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    currentQuestion--;
+                    renderTest();
+                });
+            }
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    currentQuestion++;
+                    renderTest();
+                });
+            }
+            
+            const finishBtn = document.getElementById('finishBtn');
+            if (finishBtn) {
+                finishBtn.addEventListener('click', () => {
+                    currentQuestion++;
+                    renderTest();
+                });
+            }
+        }
+        
+        // Показать результат теста
+        function showResult() {
+            // Генерируем случайную картинку на основе ответов пользователя
+            // Для простоты используем сумму индексов ответов для выбора картинки
+            let answerSum = userAnswers.reduce((sum, answer) => sum + answer, 0);
+            let imageIndex = (answerSum * 7) % motivationImages.length;
+            
+            const selectedImage = motivationImages[imageIndex];
+            
+            testContent.innerHTML = `
+                <div class="result-container">
+                    <h3 class="result-title">Ваша мотивационная картинка</h3>
+                    <p>На основе ваших ответов мы подобрали для вас изображение, которое поможет найти внутренний покой и вдохновение.</p>
+                    <img src="${selectedImage.url}" alt="${selectedImage.title}" class="motivation-image">
+                    <p><strong>${selectedImage.title}</strong></p>
+                    <p style="margin-top: 20px;">Сохраните эту картинку или сделайте её заставкой на телефоне, чтобы она напоминала вам о внутренней гармонии.</p>
+                    <button class="btn btn-primary" id="restartTest" style="margin-top: 20px;">Пройти тест еще раз</button>
+                </div>
+            `;
+            
+            // Обработчик для кнопки "Пройти тест еще раз"
+            document.getElementById('restartTest').addEventListener('click', initTest);
+        }
+        
+        // Навигация между страницами
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Убираем активный класс со всех ссылок и страниц
+                navLinks.forEach(l => l.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // Добавляем активный класс к выбранной ссылке
+                this.classList.add('active');
+                
+                // Показываем выбранную страницу
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                
+                // Если переходим на страницу теста, инициализируем его
+                if (pageId === 'test') {
+                    initTest();
+                }
+            });
+        });
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', initTest);
+    </script>
+</body>
+</html>
