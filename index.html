@@ -823,9 +823,7 @@
         function showResult() {
             // Генерируем случайную картинку на основе ответов пользователя
             // Для простоты используем сумму индексов ответов для выбора картинки
-            let answerSum = userAnswers.reduce((sum, answer) => sum + answer, 0);
-            let imageIndex = (answerSum * 7) % motivationImages.length;
-            
+            let imageIndex = Math.floor(Math.random() * motivationImages.length);
             const selectedImage = motivationImages[imageIndex];
             
             testContent.innerHTML = `
